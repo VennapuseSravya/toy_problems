@@ -13,7 +13,8 @@ function Task(props) {
     />
     <button value = "Delete" onClick = {() =>
         props.onDelete(props.task.id)
-    }>Delete</button>
+    }>Delete
+    </button>
     
     </li>
 }
