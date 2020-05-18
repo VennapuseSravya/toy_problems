@@ -3,28 +3,26 @@ import React from 'react';
 import {View, Button, Text, ScrollView, ImagePropTypes,StyleSheet} from 'react-native';
 import { TextInput, Input, CheckBox,ListItem} from 'react-native';
 
-// let id = 0
+
 const styles = StyleSheet.create({
   todo:{
     flexDirection:'row',
     alignItems:'center',
+    backgroundColor: "#e6ffb3",
+    color: "#446600",
+    paddingTop:30,
+
   },
   margin:{
     paddingTop:30,
     marginTop: 50,
-    paddingVertical: 8,
-    color: "#20232a",
     textAlign: "center",
+    
   },
   title: {
-    paddingTop:20,
-    marginTop: 50,
-    paddingVertical: 8,
-    borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
-    backgroundColor: "#61dafb",
-    color: "#20232a",
+    marginTop:50,
+    backgroundColor: "#993333",
+    color: "#ffffff",
     textAlign: "center",
     fontSize: 30,
     fontWeight: "bold"
@@ -34,16 +32,13 @@ const styles = StyleSheet.create({
 
 
 function Task(props) {
-  
- 
-
   console.log(props);
   console.log(props.status);
   return (
     <View style = {styles.todo}>
-    <Text> {props.name}, {props.dueDate.toLocaleTimeString()}   </Text>
+    <Text > {props.name}, Current-time: {props.dueDate.toLocaleTimeString()}   </Text>
     <CheckBox title = 'ClickHere' value = {props.status}  onValueChange = {() => props.onChange()}/> 
-    <Button value = "Delete" title="Delete" onPress = {() =>
+    <Button value = "Delete" title="bin" onPress = {() =>
       props.onDelete()}/>
   
  </View>
@@ -54,15 +49,11 @@ function Task(props) {
 
 
 export default class TodoList extends React.Component{
-
   constructor(){
     super();
     this.state = {list: [] };
-    
-
     this.handleAddTask = this.handleAddTask.bind(this);
-    // this.handleDeleteTask = this.handleDeleteTask.bind(this);
-    // this.handleCheck = this.handleCheck.bind(this);
+    
   }
     handleAddTask(task) {
     console.log("add task clicked");
@@ -86,46 +77,32 @@ export default class TodoList extends React.Component{
   this.setState({
     list: tmp
   });
-  //   list: this.state.list.map((task) => {
-  //     if (task.id === taskId) {
-  //       return {
-  //         ...task,
-  //         status: !task.status
-  //       };
-  //     } 
-  //     return task;
-      
-  //   })
-  // });
-  
   };
   render() {
     return (
         <View>
-            <Text style={styles.title}>TODO List</Text>
+            <Text style={styles.title}>Todo List</Text>
             <ScrollView>
                 {
                     this.state.list.map((t,index) =>
                         <Task key={t.id} name={t.name} dueDate={t.dueDate}                    
-               onChange={() => this.handleCheck(index)}
-              onDelete={() => this.handleDeleteTask(t.id)}
-              status = {t.status} index ={index}
-            />
-                    )}
-
+                              onChange={() => this.handleCheck(index)}
+                              onDelete={() => this.handleDeleteTask(t.id)}
+                              status = {t.status} index ={index} />
+                    )
+                }
             </ScrollView>
-            
-
             <TaskNameForm onAddTask={this.handleAddTask} />
         </View>
     );
 }
 }
+
+
 class TaskNameForm extends React.Component {
   constructor(props) {
       super(props);
       this.state = {value: ''};
-
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -141,9 +118,6 @@ class TaskNameForm extends React.Component {
   handleChange = (text) => {
     this.setState({ value: text })
   }
-
-  
-
   render() {
       return(
           <View style={styles.margin}>
