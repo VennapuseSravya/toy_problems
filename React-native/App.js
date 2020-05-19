@@ -36,11 +36,10 @@ function Task(props) {
   console.log(props.status);
   return (
     <View style = {styles.todo}>
-    <Text > {props.name}, Current-time: {props.currentTime.toLocaleTimeString()} Duedate:{props.dueDate.toLocaleDateString()}   </Text>
+    <Text > {props.name}, CurrentDate: {props.currentTime.toLocaleDateString()} Duedate:{props.dueDate.toLocaleDateString()}   </Text>
     <CheckBox title = 'ClickHere' value = {props.status}  onValueChange = {() => props.onChange()}/> 
     <Button value = "Delete" title="bin" onPress = {() =>
       props.onDelete()}/>
-  
  </View>
   )
 }
@@ -115,7 +114,7 @@ class TaskNameForm extends React.Component {
      
       event.preventDefault();
       const task = {id:Date.now(), name: this.state.value, 
-      dueDate: new Date(),endDate:new Date(Date.now()),status : false};
+      dueDate: new Date(),endDate:new Date(Date.now()+(60*60*24*1000)),status : false};
       // add the task object to the task list
       this.props.onAddTask(task);
       this.clearText();
