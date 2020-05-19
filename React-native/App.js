@@ -6,7 +6,7 @@ import { TextInput, Input, CheckBox,ListItem} from 'react-native';
 
 const styles = StyleSheet.create({
   todo:{
-    flexDirection:'row',
+    
     alignItems:'center',
     backgroundColor: "#e6ffb3",
     color: "#446600",
@@ -36,7 +36,7 @@ function Task(props) {
   console.log(props.status);
   return (
     <View style = {styles.todo}>
-    <Text > {props.name}, Current-time: {props.dueDate.toLocaleTimeString()}   </Text>
+    <Text > {props.name}, Current-time: {props.currentTime.toLocaleTimeString()} Duedate:{props.dueDate.toLocaleDateString()}   </Text>
     <CheckBox title = 'ClickHere' value = {props.status}  onValueChange = {() => props.onChange()}/> 
     <Button value = "Delete" title="bin" onPress = {() =>
       props.onDelete()}/>
@@ -85,7 +85,7 @@ export default class TodoList extends React.Component{
             <ScrollView>
                 {
                     this.state.list.map((t,index) =>
-                        <Task key={t.id} name={t.name} dueDate={t.dueDate}                    
+                        <Task key={t.id} name={t.name} dueDate={t.endDate}  currentTime={t.dueDate}              
                               onChange={() => this.handleCheck(index)}
                               onDelete={() => this.handleDeleteTask(t.id)}
                               status = {t.status} index ={index} />
@@ -106,14 +106,19 @@ class TaskNameForm extends React.Component {
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
   }
+  clearText(){
+    this.setState({value:""})
+  }
 
   handleSubmit(event) {
       // create a task object
+     
       event.preventDefault();
       const task = {id:Date.now(), name: this.state.value, 
-      dueDate: new Date(),status : false};
+      dueDate: new Date(),endDate:new Date(Date.now()),status : false};
       // add the task object to the task list
       this.props.onAddTask(task);
+      this.clearText();
   }
   handleChange = (text) => {
     this.setState({ value: text })
